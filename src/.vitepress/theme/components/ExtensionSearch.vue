@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
+import { useRouter } from 'vitepress'
 import { useExtensions, getContentRatingColor, getContentRatingBg, type Extension } from '../lib/extensions'
+
+const router = useRouter()
 
 const { extensions, loading, loadRepos, fetchAllExtensions } = useExtensions()
 
@@ -35,7 +38,7 @@ const close = () => {
 }
 
 const selectExtension = (ext: Extension) => {
-  window.location.href = `/extension-list?search=${encodeURIComponent(ext.name)}`
+  router.go(`/extension-list?search=${encodeURIComponent(ext.name)}`)
   close()
 }
 

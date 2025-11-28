@@ -19,7 +19,7 @@ const emit = defineEmits<{
 }>()
 
 const detailsContainer = ref<HTMLElement | null>(null)
-const windowWidth = ref(window.innerWidth)
+const windowWidth = ref(1024) // Default desktop width
 
 const isMobile = computed(() => windowWidth.value < 768)
 
@@ -43,6 +43,7 @@ const handleInstall = () => {
 }
 
 onMounted(() => {
+  windowWidth.value = window.innerWidth
   window.addEventListener('resize', handleResize)
 })
 
