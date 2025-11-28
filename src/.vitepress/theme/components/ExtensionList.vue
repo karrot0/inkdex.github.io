@@ -283,12 +283,18 @@ onMounted(async () => {
 
 <template>
   <div class="extension-list">
-    <div v-if="loading" class="loading">
-      <div class="spinner"></div>
+    <div
+      v-if="loading"
+      class="loading"
+    >
+      <div class="spinner" />
       Loading extensions...
     </div>
 
-    <div v-else-if="error" class="error">
+    <div
+      v-else-if="error"
+      class="error"
+    >
       Error loading extensions: {{ error }}
     </div>
 
@@ -298,22 +304,44 @@ onMounted(async () => {
         <div class="search-bar">
           <div class="search-input-container">
             <span class="search-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ><circle
+                cx="11"
+                cy="11"
+                r="8"
+              /><line
+                x1="21"
+                y1="21"
+                x2="16.65"
+                y2="16.65"
+              /></svg>
             </span>
             <input
               v-model="searchQuery"
               type="text"
               placeholder="Search extensions..."
               class="search-input"
-            />
-            <span v-if="!searchQuery && selectedRatings.size === 0 && selectedSources.size === 0 && selectedLanguages.size === 0 && selectedGenres.size === 0" class="search-shortcut">
+            >
+            <span
+              v-if="!searchQuery && selectedRatings.size === 0 && selectedSources.size === 0 && selectedLanguages.size === 0 && selectedGenres.size === 0"
+              class="search-shortcut"
+            >
               <kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd>
             </span>
             <button
               v-if="searchQuery || selectedRatings.size > 0 || selectedSources.size > 0 || selectedLanguages.size > 0 || selectedGenres.size > 0"
-              @click="clearSearch"
               class="clear-btn"
               title="Clear search"
+              @click="clearSearch"
             >
               ✕
             </button>
@@ -323,36 +351,51 @@ onMounted(async () => {
         <div class="filters-row">
           <div class="toggles-group">
             <button
-              @click="filtersExpanded = !filtersExpanded"
               class="action-btn"
               :class="{ active: filtersExpanded || selectedSources.size > 0 || selectedRatings.size > 0 || selectedLanguages.size > 0 || selectedGenres.size > 0 }"
+              @click="filtersExpanded = !filtersExpanded"
             >
               <span class="btn-text">Filters</span>
-              <span v-if="selectedSources.size + selectedRatings.size + selectedLanguages.size + selectedGenres.size > 0" class="filter-count">{{ selectedSources.size + selectedRatings.size + selectedLanguages.size + selectedGenres.size }}</span>
-              <span class="expand-icon" :class="{ expanded: filtersExpanded }">▼</span>
+              <span
+                v-if="selectedSources.size + selectedRatings.size + selectedLanguages.size + selectedGenres.size > 0"
+                class="filter-count"
+              >{{ selectedSources.size + selectedRatings.size + selectedLanguages.size + selectedGenres.size }}</span>
+              <span
+                class="expand-icon"
+                :class="{ expanded: filtersExpanded }"
+              >▼</span>
             </button>
 
             <button
-              @click="showRepoManager = !showRepoManager"
               class="action-btn"
               :class="{ active: showRepoManager || customRepos.length > 0 }"
+              @click="showRepoManager = !showRepoManager"
             >
               <span class="btn-text">Repos</span>
-              <span v-if="customRepos.length > 0" class="filter-count">{{ customRepos.length }}</span>
-              <span class="expand-icon" :class="{ expanded: showRepoManager }">▼</span>
+              <span
+                v-if="customRepos.length > 0"
+                class="filter-count"
+              >{{ customRepos.length }}</span>
+              <span
+                class="expand-icon"
+                :class="{ expanded: showRepoManager }"
+              >▼</span>
             </button>
           </div>
         </div>
 
         <!-- Collapsible Filters Section -->
-        <div class="advanced-filters" :class="{ expanded: filtersExpanded }">
+        <div
+          class="advanced-filters"
+          :class="{ expanded: filtersExpanded }"
+        >
           <div class="filter-group">
             <div class="filter-header">
               <span class="filter-label">Content Rating</span>
               <button 
                 v-if="selectedRatings.size > 0" 
-                @click="selectedRatings = new Set()" 
-                class="clear-filter-btn"
+                class="clear-filter-btn" 
+                @click="selectedRatings = new Set()"
               >
                 Clear
               </button>
@@ -380,8 +423,8 @@ onMounted(async () => {
               <span class="filter-label">Sources</span>
               <button 
                 v-if="selectedSources.size > 0" 
-                @click="selectedSources = new Set()" 
-                class="clear-filter-btn"
+                class="clear-filter-btn" 
+                @click="selectedSources = new Set()"
               >
                 Clear
               </button>
@@ -404,8 +447,8 @@ onMounted(async () => {
               <span class="filter-label">Languages</span>
               <button 
                 v-if="selectedLanguages.size > 0" 
-                @click="selectedLanguages = new Set()" 
-                class="clear-filter-btn"
+                class="clear-filter-btn" 
+                @click="selectedLanguages = new Set()"
               >
                 Clear
               </button>
@@ -428,8 +471,8 @@ onMounted(async () => {
               <span class="filter-label">Genres</span>
               <button 
                 v-if="selectedGenres.size > 0" 
-                @click="selectedGenres = new Set()" 
-                class="clear-filter-btn"
+                class="clear-filter-btn" 
+                @click="selectedGenres = new Set()"
               >
                 Clear
               </button>
@@ -447,15 +490,24 @@ onMounted(async () => {
             </div>
           </div>
 
-          <div v-if="selectedLanguages.size > 0 || selectedGenres.size > 0" class="filter-actions">
-            <button @click="clearAllFilters" class="clear-all-btn">
+          <div
+            v-if="selectedLanguages.size > 0 || selectedGenres.size > 0"
+            class="filter-actions"
+          >
+            <button
+              class="clear-all-btn"
+              @click="clearAllFilters"
+            >
               Clear All Filters
             </button>
           </div>
         </div>
 
         <!-- Collapsible Repository Manager -->
-        <div class="advanced-filters repos-section" :class="{ expanded: showRepoManager }">
+        <div
+          class="advanced-filters repos-section"
+          :class="{ expanded: showRepoManager }"
+        >
           <div class="filter-group">
             <div class="filter-header">
               <span class="filter-label">Add Repository</span>
@@ -467,24 +519,27 @@ onMounted(async () => {
                 placeholder="owner/repo or https://github.com/owner/repo"
                 class="repo-input-inline"
                 @keyup.enter="addCustomRepo"
-              />
+              >
               <button 
-                @click="addCustomRepo" 
-                class="add-repo-btn-inline"
+                class="add-repo-btn-inline" 
                 :disabled="checkingRepo"
+                @click="addCustomRepo"
               >
                 {{ checkingRepo ? 'Adding...' : 'Add' }}
               </button>
             </div>
           </div>
 
-          <div class="filter-group" v-if="customRepos.length > 0">
+          <div
+            v-if="customRepos.length > 0"
+            class="filter-group"
+          >
             <div class="filter-header">
               <span class="filter-label">Custom Repositories</span>
               <button 
                 v-if="customRepos.length > 0" 
-                @click="customRepos.forEach(r => removeCustomRepo(r.id))" 
-                class="clear-filter-btn"
+                class="clear-filter-btn" 
+                @click="customRepos.forEach(r => removeCustomRepo(r.id))"
               >
                 Remove All
               </button>
@@ -496,12 +551,20 @@ onMounted(async () => {
                 class="repo-chip"
               >
                 <span class="repo-chip-name">{{ repo.displayName }}</span>
-                <button @click="removeCustomRepo(repo.id)" class="repo-chip-remove">✕</button>
+                <button
+                  class="repo-chip-remove"
+                  @click="removeCustomRepo(repo.id)"
+                >
+                  ✕
+                </button>
               </div>
             </div>
           </div>
 
-          <div v-if="customRepos.length === 0" class="no-repos-hint">
+          <div
+            v-if="customRepos.length === 0"
+            class="no-repos-hint"
+          >
             <span>No custom repositories added. Add a GitHub repository above.</span>
           </div>
         </div>
@@ -512,12 +575,35 @@ onMounted(async () => {
         <span class="results-count">
           Showing {{ filteredExtensions.length }} of {{ extensions.length }} extensions
         </span>
-        <span v-if="searchQuery || selectedRatings.size > 0 || selectedSources.size > 0 || selectedLanguages.size > 0 || selectedGenres.size > 0" class="active-filters">
-          <span v-if="searchQuery" class="filter-tag">Search: "{{ searchQuery }}"</span>
-          <span v-for="rating in selectedRatings" :key="`rating-${rating}`" class="filter-tag rating-tag" :class="`rating-${rating.toLowerCase()}`">{{ rating }}</span>
-          <span v-for="source in selectedSources" :key="`source-${source}`" class="filter-tag source-tag">{{ getSourceDisplayName(source) }}</span>
-          <span v-for="lang in selectedLanguages" :key="`lang-${lang}`" class="filter-tag language-tag">{{ lang }}</span>
-          <span v-for="genre in selectedGenres" :key="`genre-${genre}`" class="filter-tag genre-tag">{{ genre }}</span>
+        <span
+          v-if="searchQuery || selectedRatings.size > 0 || selectedSources.size > 0 || selectedLanguages.size > 0 || selectedGenres.size > 0"
+          class="active-filters"
+        >
+          <span
+            v-if="searchQuery"
+            class="filter-tag"
+          >Search: "{{ searchQuery }}"</span>
+          <span
+            v-for="rating in selectedRatings"
+            :key="`rating-${rating}`"
+            class="filter-tag rating-tag"
+            :class="`rating-${rating.toLowerCase()}`"
+          >{{ rating }}</span>
+          <span
+            v-for="source in selectedSources"
+            :key="`source-${source}`"
+            class="filter-tag source-tag"
+          >{{ getSourceDisplayName(source) }}</span>
+          <span
+            v-for="lang in selectedLanguages"
+            :key="`lang-${lang}`"
+            class="filter-tag language-tag"
+          >{{ lang }}</span>
+          <span
+            v-for="genre in selectedGenres"
+            :key="`genre-${genre}`"
+            class="filter-tag genre-tag"
+          >{{ genre }}</span>
         </span>
       </div>
 
@@ -540,12 +626,15 @@ onMounted(async () => {
               class="extension-icon"
               loading="lazy"
               @error="(e) => (e.target as HTMLImageElement).src = 'https://paperback.moe/pb-placeholder.png'"
-            />
+            >
             <div class="extension-header-text">
               <h3 class="extension-name">
                 {{ extension.name }}
               </h3>
-              <div v-if="extension.metadata" class="header-badges">
+              <div
+                v-if="extension.metadata"
+                class="header-badges"
+              >
                 <span
                   class="rating-badge"
                   :style="{
@@ -560,12 +649,21 @@ onMounted(async () => {
             </div>
           </div>
 
-          <div v-if="extension.metadata" class="extension-meta">
-            <div v-if="extension.metadata.description" class="extension-description">
+          <div
+            v-if="extension.metadata"
+            class="extension-meta"
+          >
+            <div
+              v-if="extension.metadata.description"
+              class="extension-description"
+            >
               {{ extension.metadata.description }}
             </div>
 
-            <div v-if="extension.metadata.badges && extension.metadata.badges.length > 0" class="extension-badges">
+            <div
+              v-if="extension.metadata.badges && extension.metadata.badges.length > 0"
+              class="extension-badges"
+            >
               <span
                 v-for="badge in extension.metadata.badges.slice(0, 3)"
                 :key="badge.label"
@@ -579,21 +677,30 @@ onMounted(async () => {
               </span>
             </div>
 
-            <div v-if="extension.metadata.language" class="extension-language">
+            <div
+              v-if="extension.metadata.language"
+              class="extension-language"
+            >
               <span class="language-badge">{{ extension.metadata.language }}</span>
             </div>
           </div>
 
-          <div class="extension-actions" @click.stop>
+          <div
+            class="extension-actions"
+            @click.stop
+          >
             <button
-              @click="showExtensionDetails(extension)"
               class="details-btn"
+              @click="showExtensionDetails(extension)"
             >
               Details
             </button>
           </div>
           
-          <div v-if="selectedExtensions.has(`${extension.source}-${extension.name}`)" class="selected-indicator">
+          <div
+            v-if="selectedExtensions.has(`${extension.source}-${extension.name}`)"
+            class="selected-indicator"
+          >
             <span class="selected-checkmark">✓ Selected</span>
           </div>
         </div>
@@ -605,22 +712,35 @@ onMounted(async () => {
         class="floating-install-btn"
       >
         <button
-          @click="installSelectedExtensions"
           class="install-selected-btn"
+          @click="installSelectedExtensions"
         >
           <span>Install Selected</span>
           <span class="selected-count">{{ selectedExtensions.size }}</span>
         </button>
       </div>
 
-      <div v-if="filteredExtensions.length === 0" class="no-results">
-        <div class="no-results-icon">🔍</div>
+      <div
+        v-if="filteredExtensions.length === 0"
+        class="no-results"
+      >
+        <div class="no-results-icon">
+          🔍
+        </div>
         <h3>No sources found</h3>
         <p>Try adjusting your search terms or filters.</p>
-        <button @click="clearSearch" class="clear-search-btn">Clear Search</button>
+        <button
+          class="clear-search-btn"
+          @click="clearSearch"
+        >
+          Clear Search
+        </button>
       </div>
 
-      <div v-if="!loading && !error" class="stats">
+      <div
+        v-if="!loading && !error"
+        class="stats"
+      >
         Total sources: {{ extensions.length }}
       </div>
     </div>

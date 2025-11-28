@@ -31,7 +31,3 @@ Click the installation link below to add it to your Paperback app.
    :::
 
 The registry is hosted on GitHub and can be found [here](https://github.com/inkdex/extensions). It is completely automated, for more info you can join our [Discord server](https://discord.gg/inkdex) and ask us about it!
-
-## Extension List
-
-<ExtensionList />

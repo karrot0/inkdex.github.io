@@ -60,42 +60,77 @@ onUnmounted(() => {
     @click="$emit('hide')"
   >
     <div
+      ref="detailsContainer"
       class="details-container"
       :class="{ 'desktop': !isMobile }"
       @click.stop
       @scroll="handleScroll"
-      ref="detailsContainer"
     >
       <!-- Mobile handle bar -->
-      <div v-if="isMobile" class="details-handle">
-        <div class="handle-bar"></div>
+      <div
+        v-if="isMobile"
+        class="details-handle"
+      >
+        <div class="handle-bar" />
       </div>
 
       <!-- Desktop close button -->
-      <button v-else class="details-close-btn" @click="$emit('hide')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
+      <button
+        v-else
+        class="details-close-btn"
+        @click="$emit('hide')"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line
+            x1="18"
+            y1="6"
+            x2="6"
+            y2="18"
+          />
+          <line
+            x1="6"
+            y1="6"
+            x2="18"
+            y2="18"
+          />
         </svg>
       </button>
 
-      <div class="details-content" :class="{ 'desktop': !isMobile }">
+      <div
+        class="details-content"
+        :class="{ 'desktop': !isMobile }"
+      >
         <div class="details-header">
           <img
             :src="extension.iconUrl"
             :alt="`${extension.name} icon`"
             class="details-icon"
             @error="(e) => (e.target as HTMLImageElement).src = 'https://paperback.moe/pb-placeholder.png'"
-          />
+          >
           <div class="details-header-text">
-            <h2 class="details-title">{{ extension.name }}</h2>
-            <span class="details-source-badge" :class="extension.source">
+            <h2 class="details-title">
+              {{ extension.name }}
+            </h2>
+            <span
+              class="details-source-badge"
+              :class="extension.source"
+            >
               {{ extension.source === 'inkdex' ? 'Inkdex' : extension.repoId || extension.source }}
             </span>
           </div>
         </div>
 
-        <div v-if="extension.metadata" class="details-meta">
+        <div
+          v-if="extension.metadata"
+          class="details-meta"
+        >
           <div class="details-section">
             <h3>Content Rating</h3>
             <span
@@ -109,17 +144,26 @@ onUnmounted(() => {
             </span>
           </div>
 
-          <div v-if="extension.metadata.language" class="details-section">
+          <div
+            v-if="extension.metadata.language"
+            class="details-section"
+          >
             <h3>Language</h3>
             <span class="details-language-badge">{{ extension.metadata.language }}</span>
           </div>
 
-          <div v-if="extension.metadata.version" class="details-section">
+          <div
+            v-if="extension.metadata.version"
+            class="details-section"
+          >
             <h3>Version</h3>
             <span class="details-version-badge">{{ extension.metadata.version }}</span>
           </div>
 
-          <div v-if="extension.metadata.badges && extension.metadata.badges.length > 0" class="details-section">
+          <div
+            v-if="extension.metadata.badges && extension.metadata.badges.length > 0"
+            class="details-section"
+          >
             <h3>Tags</h3>
             <div class="details-badges">
               <span
@@ -136,7 +180,10 @@ onUnmounted(() => {
             </div>
           </div>
 
-          <div v-if="extension.metadata.developers && extension.metadata.developers.length > 0" class="details-section">
+          <div
+            v-if="extension.metadata.developers && extension.metadata.developers.length > 0"
+            class="details-section"
+          >
             <h3>Developers</h3>
             <div class="details-developers">
               <div
@@ -168,15 +215,18 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div v-if="extension.metadata?.description" class="details-description">
+        <div
+          v-if="extension.metadata?.description"
+          class="details-description"
+        >
           <h3>Description</h3>
           <p>{{ extension.metadata.description }}</p>
         </div>
 
         <div class="details-actions">
           <button
-            @click="handleInstall"
             class="details-install-btn"
+            @click="handleInstall"
           >
             Install Extension
           </button>

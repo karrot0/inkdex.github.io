@@ -66,13 +66,14 @@ const handleKeydown = (e: KeyboardEvent) => {
       e.preventDefault()
       selectedIndex.value = Math.max(selectedIndex.value - 1, 0)
       break
-    case 'Enter':
+    case 'Enter': {
       e.preventDefault()
       const selected = filteredExtensions.value[selectedIndex.value]
       if (selected) {
         selectExtension(selected)
       }
       break
+    }
   }
 }
 
@@ -96,13 +97,37 @@ defineExpose({ open })
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="isOpen" class="extension-search-overlay" @click.self="close">
+      <div
+        v-if="isOpen"
+        class="extension-search-overlay"
+        @click.self="close"
+      >
         <div class="extension-search-modal">
           <div class="search-header">
             <div class="search-input-wrapper">
-              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <svg
+                class="search-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="8"
+                />
+                <line
+                  x1="21"
+                  y1="21"
+                  x2="16.65"
+                  y2="16.65"
+                />
               </svg>
               <input
                 ref="searchInputRef"
@@ -111,26 +136,38 @@ defineExpose({ open })
                 placeholder="Search extensions..."
                 class="search-input"
                 @keydown.stop
-              />
+              >
               <kbd class="search-kbd">⇧K</kbd>
             </div>
           </div>
 
           <div class="search-results">
-            <div v-if="loading" class="search-loading">
-              <div class="spinner"></div>
+            <div
+              v-if="loading"
+              class="search-loading"
+            >
+              <div class="spinner" />
               <span>Loading extensions...</span>
             </div>
 
-            <div v-else-if="searchQuery && filteredExtensions.length === 0" class="search-empty">
+            <div
+              v-else-if="searchQuery && filteredExtensions.length === 0"
+              class="search-empty"
+            >
               <span>No extensions found for "{{ searchQuery }}"</span>
             </div>
 
-            <div v-else-if="!searchQuery" class="search-hint">
+            <div
+              v-else-if="!searchQuery"
+              class="search-hint"
+            >
               <span>Type to search extensions by name, description, or tags</span>
             </div>
 
-            <div v-else class="results-list">
+            <div
+              v-else
+              class="results-list"
+            >
               <button
                 v-for="(ext, index) in filteredExtensions"
                 :key="`${ext.source}-${ext.name}`"
@@ -144,7 +181,7 @@ defineExpose({ open })
                   :alt="ext.name"
                   class="result-icon"
                   @error="(e) => (e.target as HTMLImageElement).src = 'https://paperback.moe/pb-placeholder.png'"
-                />
+                >
                 <div class="result-info">
                   <div class="result-name">
                     {{ ext.metadata?.name || ext.name }}
@@ -159,7 +196,10 @@ defineExpose({ open })
                       {{ ext.metadata.contentRating }}
                     </span>
                   </div>
-                  <div v-if="ext.metadata?.description" class="result-description">
+                  <div
+                    v-if="ext.metadata?.description"
+                    class="result-description"
+                  >
                     {{ ext.metadata.description }}
                   </div>
                 </div>
